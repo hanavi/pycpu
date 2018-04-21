@@ -177,6 +177,10 @@ class pyCPU(object):
         for i in range(255):
             print('{:02x}: {:016b}'.format(i,self._mem[i]))
 
+    def load(self,data):
+        for i,d in enumerate(data):
+            self._mem[i] = d
+
 
 if __name__ == "__main__":
     testCPU = pyCPU()
