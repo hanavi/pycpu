@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
+
 import logging
+import pycpu
+
 def cpu_multiply(a,b,cpu):
 
     # set memory references for eaze of use
@@ -59,3 +62,9 @@ def cpu_multiply(a,b,cpu):
     # Check to see if we are done
     cpu._mem[tAddr + 18] = (cpu._JEZ << 8) + r
     cpu._mem[tAddr + 19] = (cpu._JMP << 8) + tAddr + 11
+
+if __name__ == "__main__":
+    testCPU = pycpu.pyCPU()
+    cpu_multiply(33,58,testCPU)
+    print("actual: {}".format(33*58))
+    testCPU.run()

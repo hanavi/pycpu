@@ -6,8 +6,6 @@ import logging
 
 #logging.getLogger().setLevel(logging.DEBUG)
 
-from program_1 import cpu_multiply
-
 class pyCPU(object):
     def __init__(self):
 
@@ -16,6 +14,7 @@ class pyCPU(object):
         self._reg_b = 0 # Register B
         self._pc = 0    # Program Counter
         self._jf = 0    # Jump flag (not implemented yet)
+        self._delay = 0 # We can use this to slow down our cpu a bit
 
         # Current command list
         self._NOP = 0b00000000
@@ -123,10 +122,14 @@ class pyCPU(object):
         self._mem[addr] = self._reg_a
         self._pc += 1
 
+    def set_delay(self,delay):
+        self._delay = delay
+
     def run(self):
         """ Run the program """
 
         while True:
+            time.sleep(self._delay) # Slow down our cpu a bit
             r = self._mem[self._pc] # Get the command from memory
             cmd = r >> 8;
             arg = r & 0b11111111
@@ -177,8 +180,7 @@ class pyCPU(object):
 
 if __name__ == "__main__":
     testCPU = pyCPU()
-    #testCPU.dumpMemory()
-    cpu_multiply(7,83,testCPU)
+    testCPU.dumpMemory()
     testCPU.run()
 
 
